@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+<div id="chart"></div> 
+<script src="https://d3js.org/d3.v5.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js" integrity="sha512-+IpCthlNahOuERYUSnKFjzjdKXIbJ/7Dd6xvUp+7bEw0Jp2dg6tluyxLs+zq9BMzZgrLv8886T4cBSqnKiVgUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css" integrity="sha512-cznfNokevSG7QPA5dZepud8taylLdvgr0lDqw/FEZIhluFsSwyvS81CMnRdrNSKwbsmc43LtRd2/WMQV+Z85AQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
+d3.select("body").style("background-color", "#e0f0f5");
+d3.csv("/COVID-19 Survey Student Responses.csv").then((data) => {
+const stressBustersCount= {}
+console.log(data)
+data.forEach(row=>{
+const stressBusterName = row["Stress busters"]
+if (typeof stressBustersCount[stressBusterName] === "undefined")
+stressBustersCount[stressBusterName]=0
+stressBustersCount[stressBusterName]+=1
+});
+console.log(stressBustersCount)
+
+const counts = Object.values(stressBustersCount)
+const categories = Object.keys(stressBustersCount)
+
+const chart = c3.generate({
+bindto: "#chart",
+data: {
+columns: [["Stress busters", ...counts]],
+type: "bar",
+},
+axis: {
+x: {
+type: "category",
+categories: categories,
+},
+},
+});
+
+})
+});
+</script>
+</body>
+</html>

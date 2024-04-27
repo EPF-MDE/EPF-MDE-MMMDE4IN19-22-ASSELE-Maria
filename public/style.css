@@ -1,0 +1,3 @@
+body{background-color: blue; 
+     max-width: 800px}
+@media screen and (max-width:480px) {p{display: none}}
